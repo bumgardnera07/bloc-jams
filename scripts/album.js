@@ -27,6 +27,21 @@ var albumMarconi = {
     ]
 };
 
+var albumMotherGoose = {
+    title: 'Kidz Jamz',
+    artist: 'Mother Goose',
+    label: 'JUZT 4 KIDZ',
+    year: '1999',
+    albumArtUrl: 'assets/images/album_covers/20.png',
+    songs: [
+        { title: 'Where is my sandwich', duration: '3:01' },
+        { title: 'Lets play video games', duration: '5:01' },
+        { title: 'I want to go home', duration: '3:21'},
+        { title: 'Ur not my dad', duration: '3:14' },
+        { title: 'Kidz Rule', duration: '2:15'}
+    ]
+};
+
 var createSongRow = function(songNumber, songName, songLength) {
      var template =
         '<tr class="album-view-song-item">'
@@ -38,12 +53,13 @@ var createSongRow = function(songNumber, songName, songLength) {
 
      return template;
  };
+var albumImage = document.getElementsByClassName('album-cover-art')[0];
 
  var setCurrentAlbum = function(album) {
     var albumTitle = document.getElementsByClassName('album-view-title')[0];
     var albumArtist = document.getElementsByClassName('album-view-artist')[0];
     var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-    var albumImage = document.getElementsByClassName('album-cover-art')[0];
+
     var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
     albumTitle.firstChild.nodeValue = album.title;
     albumArtist.firstChild.nodeValue = album.artist;
@@ -57,4 +73,14 @@ var createSongRow = function(songNumber, songName, songLength) {
 
 window.onload = function() {
     setCurrentAlbum(albumPicasso);
+
+var i=1;
+var albumList = [albumPicasso, albumMarconi, albumMotherGoose];
+albumImage.addEventListener("click", function(event) {
+  setCurrentAlbum(albumList[i]);
+  i++;
+  if (i ==albumList.length) {
+    i =0;
+  };
+});
 };
