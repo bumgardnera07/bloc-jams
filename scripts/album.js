@@ -56,7 +56,7 @@ var createSongRow = function(songNumber, songName, songLength) {
       };
 
 
-      var onHover = function(event) {
+      var onHover = function() {
       var songNumberCell = $(this).find('.song-item-number');
       var songNumber = songNumberCell.attr('data-song-number');
 
@@ -65,7 +65,7 @@ var createSongRow = function(songNumber, songName, songLength) {
       }
   };
 
-  var offHover = function(event) {
+  var offHover = function() {
       var songNumberCell = $(this).find('.song-item-number');
       var songNumber = songNumberCell.attr('data-song-number');
 
