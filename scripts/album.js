@@ -34,7 +34,7 @@ var createSongRow = function(songNumber, songName, songLength) {
 
       var onHover = function() {
       var songNumberCell = parseInt($(this).find('.song-item-number'));
-      var songNumber = parseIne(songNumberCell.attr('data-song-number'));
+      var songNumber = parseInt(songNumberCell.attr('data-song-number'));
 
       if (songNumber !== currentlyPlayingSongNumber) {
           songNumberCell.html(playButtonTemplate);
