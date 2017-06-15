@@ -4,7 +4,7 @@ var createSongRow = function(songNumber, songName, songLength) {
         '<tr class="album-view-song-item">'
       + '  <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
       + '  <td class="song-item-title">' + songName + '</td>'
-      + '  <td class="song-item-duration">' + songLength + '</td>'
+      + '  <td class="song-item-duration">' + filterTimeCode(songLength) + '</td>'
       + '</tr>'
       ;
 
@@ -90,9 +90,9 @@ var updateSeekBarWhileSongPlays = function() {
         currentSoundFile.bind('timeupdate', function(event) {
             var seekBarFillRatio = this.getTime() / this.getDuration();
             var $seekBar = $('.seek-control .seek-bar');
-
+            var timeNow = this.getTime();
             updateSeekPercentage($seekBar, seekBarFillRatio);
-            setCurrentTimeInPlayerBar(this.getTime());
+            setCurrentTimeInPlayerBar(timeNow);
         });
     }
 };
@@ -192,7 +192,8 @@ var updatePlayerBarSong = function () {
     $('.currently-playing .artist-name').text(currentAlbum.artist);
     $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.artist);
     $('.main-controls .play-pause').html(playerBarPauseButton);
-    setTotalTimeInPlayerBar(currentSongFromAlbum.duration);
+    var timeNow1= currentSongFromAlbum.duration;
+    setTotalTimeInPlayerBar(timeNow1);
   }
 
 var setSong = function(songNumber) {
@@ -223,15 +224,23 @@ var seek = function(time) {
  }
 
  var setCurrentTimeInPlayerBar = function(currentTime) {
-   $('current-time').text(currentTime);
+   var formTime= filterTimeCode(currentTime);
+   $('.current-time').text(formTime);
 };
  var setTotalTimeInPlayerBar = function(totalTime) {
-  $('total-time').text(totalTime);
+  var formTime= filterTimeCode(totalTime);
+  $('.total-time').text(formTime);
 };
+
 var filterTimeCode = function(timeInSeconds) {
-  var numTime = timeInSeconds.parseFloat();
-  var numSeconds = Math.floor(numTime)
-}
+  var numTime = parseFloat(timeInSeconds);
+  var numSeconds = Math.ceil(numTime % 60);
+  var numMinutes = Math.floor(numTime / 60);
+  if (numSeconds < 10) {
+    numSeconds = "0" +numSeconds;
+  }
+  return (numMinutes + ":" + numSeconds);
+};
 
 var getSongNumberCell = function(number) {
     return $('.song-item-number[data-song-number="' + number + '"]');
